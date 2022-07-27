@@ -35,9 +35,7 @@ public class Signalization : MonoBehaviour
         while (_audioSource.volume != targetVolume)
         {
             yield return _waitForSeconds;
-            _audioSource.volume += _audioSource.volume < targetVolume ?
-                Mathf.MoveTowards(MinVolume, MaxVolume, _changeStep) :
-                -Mathf.MoveTowards(MinVolume, MaxVolume, _changeStep);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _changeStep);
         }
     }
 }
