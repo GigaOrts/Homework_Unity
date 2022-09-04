@@ -23,12 +23,12 @@ public class Signalization : MonoBehaviour
 
     private void OnEnable()
     {
-        _home.SignalizationChanged += OnSignalizationChanged;
+        _home.ThiefEntered += OnSignalizationChanged;
     }
 
     private void OnDisable()
     {
-        _home.SignalizationChanged -= OnSignalizationChanged;
+        _home.ThiefEntered -= OnSignalizationChanged;
     }
 
     private IEnumerator ChangeSirenaVolume(float targetVolume)

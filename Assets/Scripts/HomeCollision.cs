@@ -3,16 +3,13 @@ using UnityEngine;
 
 public class HomeCollision : MonoBehaviour
 {
-    private bool _isThiefInHome;
-
-    public event Action<bool> SignalizationChanged;
+    public event Action<bool> ThiefEntered;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Thief _))
         {
-            _isThiefInHome = true;
-            SignalizationChanged?.Invoke(_isThiefInHome);
+            ThiefEntered?.Invoke(true);
         }
     }
 
@@ -20,8 +17,7 @@ public class HomeCollision : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Thief _))
         {
-            _isThiefInHome = false;
-            SignalizationChanged?.Invoke(_isThiefInHome);
+            ThiefEntered?.Invoke(false);
         }
     }
 }
