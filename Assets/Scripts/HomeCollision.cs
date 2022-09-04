@@ -1,23 +1,27 @@
+using System;
 using UnityEngine;
 
 public class HomeCollision : MonoBehaviour
 {
-    [SerializeField] private Signalization signalization;
+    private bool _isThiefInHome;
+
+    public event Action<bool> SignalizationChanged;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (IsThief(collision))
-            signalization.IncreaseVolume();
+        if (collision.gameObject.TryGetComponent(out Thief _))
+        {
+            _isThiefInHome = true;
+            SignalizationChanged?.Invoke(_isThiefInHome);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (IsThief(collision))
-            signalization.DecreaseVolume();
-    }
-
-    private bool IsThief(Collider2D collision)
-    {
-        return collision.gameObject.TryGetComponent(out Thief _);
+        if (collision.gameObject.TryGetComponent(out Thief _))
+        {
+            _isThiefInHome = false;
+            SignalizationChanged?.Invoke(_isThiefInHome);
+        }
     }
 }

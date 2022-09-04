@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class Signalization : MonoBehaviour
 {
+    [SerializeField] private HomeCollision _home;
     [SerializeField] private AudioSource _audioSource;
 
     private Coroutine _changeVolumeCoroutine;
     private WaitForSeconds _waitForSeconds;
+
+    private float _targetVolume;
     private float _changeStep = 0.1f;
     private float _timeToWait = 0.2f;
 
@@ -18,16 +21,14 @@ public class Signalization : MonoBehaviour
         _waitForSeconds = new WaitForSeconds(_timeToWait);
     }
 
-    public void IncreaseVolume() => ChangeVolume(MaxVolume);
-
-    public void DecreaseVolume() => ChangeVolume(MinVolume);
-
-    private void ChangeVolume(float volume)
+    private void OnEnable()
     {
-        if (_changeVolumeCoroutine != null)
-            StopCoroutine(_changeVolumeCoroutine);
+        _home.SignalizationChanged += OnSignalizationChanged;
+    }
 
-        _changeVolumeCoroutine = StartCoroutine(ChangeSirenaVolume(volume));
+    private void OnDisable()
+    {
+        _home.SignalizationChanged -= OnSignalizationChanged;
     }
 
     private IEnumerator ChangeSirenaVolume(float targetVolume)
@@ -37,5 +38,15 @@ public class Signalization : MonoBehaviour
             yield return _waitForSeconds;
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, targetVolume, _changeStep);
         }
+    }
+
+    private void OnSignalizationChanged(bool isThiefInHome)
+    {
+        _targetVolume = isThiefInHome ? MaxVolume : MinVolume;
+
+        if (_changeVolumeCoroutine != null)
+            StopCoroutine(_changeVolumeCoroutine);
+
+        _changeVolumeCoroutine = StartCoroutine(ChangeSirenaVolume(_targetVolume));
     }
 }

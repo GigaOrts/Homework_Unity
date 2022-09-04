@@ -1,6 +1,3 @@
 using UnityEngine;
 
-public class Thief : MonoBehaviour
-{
-    
-}
+public class Thief : MonoBehaviour { }

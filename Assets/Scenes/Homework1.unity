@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0bc076257971444bdc96d7dadb91b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _home: {fileID: 1802292181}
   _audioSource: {fileID: 187980089}
 --- !u!212 &187980091
 SpriteRenderer:
@@ -683,7 +684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1637b0728829634a841a5f4a52196b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signalization: {fileID: 187980090}
 --- !u!212 &1802292182
 SpriteRenderer:
   m_ObjectHideFlags: 0
