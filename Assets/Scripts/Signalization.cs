@@ -23,12 +23,12 @@ public class Signalization : MonoBehaviour
 
     private void OnEnable()
     {
-        _home.ThiefEntered += OnSignalizationChanged;
+        _home.ThiefEntered += OnThiefEntered;
     }
 
     private void OnDisable()
     {
-        _home.ThiefEntered -= OnSignalizationChanged;
+        _home.ThiefEntered -= OnThiefEntered;
     }
 
     private IEnumerator ChangeSirenaVolume(float targetVolume)
@@ -40,7 +40,7 @@ public class Signalization : MonoBehaviour
         }
     }
 
-    private void OnSignalizationChanged(bool isThiefInHome)
+    private void OnThiefEntered(bool isThiefInHome)
     {
         _targetVolume = isThiefInHome ? MaxVolume : MinVolume;
 
